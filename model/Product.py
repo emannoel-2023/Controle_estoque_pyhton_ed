@@ -1,4 +1,5 @@
-import pickle  # Importe o módulo pickle
+import os
+import pickle
 
 class Product:
     def __init__(self, id, name, brand, price, quantity, description):
@@ -9,13 +10,17 @@ class Product:
         self.quantity = quantity
         self.description = description
 
+    @staticmethod
     def save_products(products):
-        with open('products.pkl', 'wb') as f:
+        file_path = os.path.join(os.path.dirname(__file__), 'products.pkl')
+        with open(file_path, 'wb') as f:
             pickle.dump(products, f)
 
+    @staticmethod
     def load_products():
+        file_path = os.path.join(os.path.dirname(__file__), 'products.pkl')
         try:
-            with open('products.pkl', 'rb') as f:
+            with open(file_path, 'rb') as f:
                 return pickle.load(f)
         except FileNotFoundError:
             return []
